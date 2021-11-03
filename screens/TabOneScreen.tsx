@@ -1,50 +1,18 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
-
-const client = new ApolloClient({
-  uri: 'https://rickandmortyapi.com/graphql',
-  cache: new InMemoryCache(),
-});
+import { fetchCharacters } from '../queries/fetchCharacters.gql';
 
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<'TabOne'>) {
-  // Testing query
-  React.useEffect(() => {
-    client
-      .query({
-        query: gql`
-          query {
-            characters(page: 2, filter: { name: "rick" }) {
-              info {
-                count
-              }
-              results {
-                name
-              }
-            }
-            location(id: 1) {
-              id
-            }
-            episodesByIds(ids: [1, 2]) {
-              id
-            }
-          }
-        `,
-      })
-      .then((result) => console.log(result));
-  }, []);
+  const { loading, error, data } = useQuery(fetchCharacters(1));
+
+  console.log('Loading...', loading, data);
 
   return (
     <View style={styles.container}>
