@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, FlatList, Image } from 'react-native';
+import { StyleSheet, FlatList, Image, Pressable } from 'react-native';
 import { useQuery } from '@apollo/client';
 
 import { Text, View } from '../components/Themed';
@@ -21,10 +21,21 @@ export default function TabOneScreen({
   }
 
   const renderItem = ({ item }: any) => (
-    <View style={styles.characterListContainer}>
-      <Image style={styles.characterThumb} source={{ uri: item.image }} />
-      <Text>{item.name}</Text>
-    </View>
+    <Pressable
+      onPress={() => {
+        navigation.replace('Root', {
+          screen: 'TabTwo',
+          params: {
+            id: 'foo',
+          },
+        });
+      }}
+    >
+      <View style={styles.characterListContainer}>
+        <Image style={styles.characterThumb} source={{ uri: item.image }} />
+        <Text>{item.name}</Text>
+      </View>
+    </Pressable>
   );
 
   console.log(data?.characters?.results[0]);
