@@ -3,31 +3,21 @@ import { StyleSheet, FlatList, Image, Pressable } from 'react-native';
 import { useQuery } from '@apollo/client';
 
 import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+import { Loading } from '../components/Loading';
 import { fetchCharacters } from '../queries/fetchCharacters.gql';
 
-export default function TabOneScreen({
-  navigation,
-}: RootTabScreenProps<'TabOne'>) {
+export default function TabOneScreen({ navigation }: any) {
   const { loading, error, data } = useQuery(fetchCharacters(1));
 
-  // TODO better than this
   if (loading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
 
   const renderItem = ({ item }: any) => (
     <Pressable
       onPress={() => {
-        navigation.replace('Root', {
-          screen: 'TabTwo',
-          params: {
-            id: item.id,
-          },
+        navigation.navigate('TabTwo', {
+          id: item.id,
         });
       }}
     >
@@ -37,8 +27,6 @@ export default function TabOneScreen({
       </View>
     </Pressable>
   );
-
-  console.log(data?.characters?.results[0]);
 
   return (
     <View style={styles.container}>

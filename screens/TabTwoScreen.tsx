@@ -1,24 +1,36 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Pressable } from 'react-native';
 import { useQuery } from '@apollo/client';
 
 import { Text, View } from '../components/Themed';
+import { Loading } from '../components/Loading';
 import { fetchCharacterDetail } from '../queries/fetchCharacterDetail.gql';
 
-export default function TabTwoScreen({ route }: any) {
+const StatLabel = ({ label, value }: any) => {
+  return (
+    <Text style={styles.title}>
+      {label}: {value}
+    </Text>
+  );
+};
+
+const GoBackButton = ({ onPress = () => {} }: any) => {
+  return (
+    <Pressable onPress={onPress}>
+      <View>
+        <Text style={styles.goBackButton}>&larr; Back to list</Text>
+      </View>
+    </Pressable>
+  );
+};
+
+export default function TabTwoScreen({ navigation, route }: any) {
   const { params } = route;
   const { loading, error, data } = useQuery(fetchCharacterDetail(params.id));
 
-  // TODO better than this
   if (loading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
-
-  console.log('DATA', data);
 
   return (
     <View style={styles.container}>
@@ -26,9 +38,14 @@ export default function TabTwoScreen({ route }: any) {
         style={styles.characterThumb}
         source={{ uri: data.character.image }}
       />
-      <Text style={styles.title}>Name: {data.character.name}</Text>
-      <Text style={styles.title}>Status: {data.character.status}</Text>
-      <Text style={styles.title}>Gender: {data.character.gender}</Text>
+      <StatLabel label="Name" value={data.character.name} />
+      <StatLabel label="Status" value={data.character.status} />
+      <StatLabel label="Gender" value={data.character.gender} />
+      <GoBackButton
+        onPress={() => {
+          navigation.navigate('TabOne');
+        }}
+      />
     </View>
   );
 }
@@ -46,6 +63,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 200,
     height: 200,
+    marginTop: 50,
     marginRight: 5,
+    borderRadius: 100,
+  },
+  goBackButton: {
+    alignSelf: 'flex-end',
+    fontSize: 18,
+    marginRight: 10,
   },
 });
