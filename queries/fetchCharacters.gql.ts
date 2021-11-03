@@ -7,7 +7,9 @@ export const fetchCharacters = (page: number, nameFilter = '') => gql`
         count
       }
       results {
-        name
+        id,
+        name,
+        image
       }
     }
   }`;
