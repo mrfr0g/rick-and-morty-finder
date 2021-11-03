@@ -43,7 +43,7 @@ export default function TabTwoScreen({ navigation, route }: any) {
       <StatLabel label="Gender" value={data.character.gender} />
       <GoBackButton
         onPress={() => {
-          navigation.navigate('TabOne');
+          navigation.navigate('CharacterList');
         }}
       />
     </View>

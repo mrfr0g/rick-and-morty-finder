@@ -5,8 +5,8 @@ declare global {
 }
 
 export type RootStackParamList = {
-  TabOne: undefined;
-  TabTwo: {
+  CharacterList: undefined;
+  CharacterDetail: {
     id: string;
   };
 };

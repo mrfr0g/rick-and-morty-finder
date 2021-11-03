@@ -12,8 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import CharacterListScreen from '../screens/CharacterList';
+import CharacterDetailScreen from '../screens/CharacterDetail';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -38,13 +38,13 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="TabOne"
-        component={TabOneScreen}
+        name="CharacterList"
+        component={CharacterListScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="CharacterDetail"
+        component={CharacterDetailScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

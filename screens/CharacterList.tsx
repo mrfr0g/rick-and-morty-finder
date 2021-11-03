@@ -6,7 +6,7 @@ import { Text, View } from '../components/Themed';
 import { Loading } from '../components/Loading';
 import { fetchCharacters } from '../queries/fetchCharacters.gql';
 
-export default function TabOneScreen({ navigation }: any) {
+export default function CharacterListScreen({ navigation }: any) {
   const { loading, error, data } = useQuery(fetchCharacters(1));
 
   if (loading) {
@@ -16,7 +16,7 @@ export default function TabOneScreen({ navigation }: any) {
   const renderItem = ({ item }: any) => (
     <Pressable
       onPress={() => {
-        navigation.navigate('TabTwo', {
+        navigation.navigate('CharacterDetail', {
           id: item.id,
         });
       }}
