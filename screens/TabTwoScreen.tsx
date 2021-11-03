@@ -1,19 +1,34 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { useQuery } from '@apollo/client';
 
 import { Text, View } from '../components/Themed';
+import { fetchCharacterDetail } from '../queries/fetchCharacterDetail.gql';
 
 export default function TabTwoScreen({ route }: any) {
   const { params } = route;
+  const { loading, error, data } = useQuery(fetchCharacterDetail(params.id));
+
+  // TODO better than this
+  if (loading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  console.log('DATA', data);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>id: {params.id} </Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+      <Image
+        style={styles.characterThumb}
+        source={{ uri: data.character.image }}
       />
+      <Text style={styles.title}>Name: {data.character.name}</Text>
+      <Text style={styles.title}>Status: {data.character.status}</Text>
+      <Text style={styles.title}>Gender: {data.character.gender}</Text>
     </View>
   );
 }
@@ -21,16 +36,16 @@ export default function TabTwoScreen({ route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingLeft: 10,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  characterThumb: {
+    alignSelf: 'center',
+    width: 200,
+    height: 200,
+    marginRight: 5,
   },
 });

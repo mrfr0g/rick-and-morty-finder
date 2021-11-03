@@ -26,7 +26,7 @@ export default function TabOneScreen({
         navigation.replace('Root', {
           screen: 'TabTwo',
           params: {
-            id: 'foo',
+            id: item.id,
           },
         });
       }}
