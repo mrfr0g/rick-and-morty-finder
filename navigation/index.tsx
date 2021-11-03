@@ -37,16 +37,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="CharacterList"
-        component={CharacterListScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CharacterDetail"
-        component={CharacterDetailScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="CharacterList" component={CharacterListScreen} />
+      <Stack.Screen name="CharacterDetail" component={CharacterDetailScreen} />
     </Stack.Navigator>
   );
 }
